@@ -11,7 +11,7 @@ def getScoreFor(game):
         else:
             result += getPointsFor(currentRoll)
         if frame < 10 and getPointsFor(currentRoll) == 10:
-            result = checkIfBonusPoints(game, i, result)
+            result = getBonusPoints(game, i, result)
         last = getPointsFor(currentRoll)
         if not isFirstRoll:
             frame += 1
@@ -28,7 +28,7 @@ def checkIfFirstRoll(isFirstRoll):
         isFirstRoll = True
     return isFirstRoll
 
-def checkIfBonusPoints(game, i, result):
+def getBonusPoints(game, i, result):
     if game[i] == '/':
         result += getPointsFor(game[i + 1])
     elif game[i] == 'X' or game[i] == 'x':
