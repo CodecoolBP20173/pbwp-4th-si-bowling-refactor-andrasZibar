@@ -3,30 +3,36 @@ def score(game):
     frame = 1
     isFirstRoll = True
     for i in range(len(game)):
-        if game[i] == '/':
-            result += 10 - last
-        else:
-            result += get_value(game[i])
-        if frame < 10  and get_value(game[i]) == 10:
-            if game[i] == '/':
-                result += get_value(game[i+1])
-            elif game[i] == 'X' or game[i] == 'x':
-                result += get_value(game[i+1])
-                if game[i+2] == '/':
-                    result += 10 - get_value(game[i+1])
-                else:
-                    result += get_value(game[i+2])
-        last = get_value(game[i])
-        if not isFirstRoll:
-            frame += 1
-        if isFirstRoll == True:
-            isFirstRoll = False
-        else:
-            isFirstRoll = True
-        if game[i] == 'X' or game[i] == 'x':
-            isFirstRoll = True
-            frame += 1
+        result = checkScore(game, i, frame, isFirstRoll, result)
     return result
+
+
+def checkScore(game, i, frame, isFirstRoll, result):
+    if game[i] == '/':
+        result += 10 - last
+    else:
+        result += get_value(game[i])
+    if frame < 10 and get_value(game[i]) == 10:
+        if game[i] == '/':
+            result += get_value(game[i + 1])
+        elif game[i] == 'X' or game[i] == 'x':
+            result += get_value(game[i + 1])
+            if game[i + 2] == '/':
+                result += 10 - get_value(game[i + 1])
+            else:
+                result += get_value(game[i + 2])
+    last = get_value(game[i])
+    if not isFirstRoll:
+        frame += 1
+    if isFirstRoll:
+        isFirstRoll = False
+    else:
+        isFirstRoll = True
+    if game[i] == 'X' or game[i] == 'x':
+        isFirstRoll = True
+        frame += 1
+    return result
+
 
 def get_value(char):
     if char == '1' or char == '2' or char == '3' or \
