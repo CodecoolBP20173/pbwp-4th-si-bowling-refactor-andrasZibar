@@ -3,25 +3,31 @@ def score(game):
     frame = 1
     isFirstRoll = True
     for i in range(len(game)):
-        if game[i] == '/':
+        isSpare = game[i] == '/'
+        isStrike = game[i].upper() == 'X'
+        if isSpare:
             result += 10 - last
         else:
             result += get_value(game[i])
         if frame < 10 and get_value(game[i]) == 10:
-            result = chechkIfBonusPoints(game, i, result)
+            result = checkIfBonusPoints(game, i, result)
         last = get_value(game[i])
         if not isFirstRoll:
             frame += 1
-        if isFirstRoll:
-            isFirstRoll = False
-        else:
-            isFirstRoll = True
-        if game[i].upper() == 'X':
+        isFirstRoll = checkIfFirstRoll(isFirstRoll)
+        if isStrike:
             isFirstRoll = True
             frame += 1
     return result
 
-def chechkIfBonusPoints(game, i, result):
+def checkIfFirstRoll(isFirstRoll):
+    if isFirstRoll:
+        isFirstRoll = False
+    else:
+        isFirstRoll = True
+    return isFirstRoll
+
+def checkIfBonusPoints(game, i, result):
     if game[i] == '/':
         result += get_value(game[i + 1])
     elif game[i] == 'X' or game[i] == 'x':
