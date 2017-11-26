@@ -3,15 +3,16 @@ def getScoreFor(game):
     frame = 1
     isFirstRoll = True
     for i in range(len(game)):
-        isSpare = game[i] == '/'
-        isStrike = game[i].upper() == 'X'
+        currentRoll = game[i]
+        isSpare = currentRoll == '/'
+        isStrike = currentRoll.upper() == 'X'
         if isSpare:
             result += 10 - last
         else:
-            result += getPointsFor(game[i])
-        if frame < 10 and getPointsFor(game[i]) == 10:
+            result += getPointsFor(currentRoll)
+        if frame < 10 and getPointsFor(currentRoll) == 10:
             result = checkIfBonusPoints(game, i, result)
-        last = getPointsFor(game[i])
+        last = getPointsFor(currentRoll)
         if not isFirstRoll:
             frame += 1
         isFirstRoll = checkIfFirstRoll(isFirstRoll)
