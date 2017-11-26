@@ -8,14 +8,7 @@ def score(game):
         else:
             result += get_value(game[i])
         if frame < 10 and get_value(game[i]) == 10:
-            if game[i] == '/':
-                result += get_value(game[i + 1])
-            elif game[i] == 'X' or game[i] == 'x':
-                result += get_value(game[i + 1])
-                if game[i + 2] == '/':
-                    result += 10 - get_value(game[i + 1])
-                else:
-                    result += get_value(game[i + 2])
+            result = chechkIfBonusPoints(game, i, result)
         last = get_value(game[i])
         if not isFirstRoll:
             frame += 1
@@ -26,6 +19,17 @@ def score(game):
         if game[i].upper() == 'X':
             isFirstRoll = True
             frame += 1
+    return result
+
+def chechkIfBonusPoints(game, i, result):
+    if game[i] == '/':
+        result += get_value(game[i + 1])
+    elif game[i] == 'X' or game[i] == 'x':
+        result += get_value(game[i + 1])
+        if game[i + 2] == '/':
+            result += 10 - get_value(game[i + 1])
+        else:
+            result += get_value(game[i + 2])
     return result
 
 
